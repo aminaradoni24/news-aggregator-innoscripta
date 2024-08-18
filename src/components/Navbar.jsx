@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className='bg-base-200'>
       <div className='navbar align-element '>
         <NavLink to='/' className='btn text-3xl items-center '>
-          News Aggregator
+          News
         </NavLink>
         <Link to='/preferences'>Preferences</Link>
       </div>
