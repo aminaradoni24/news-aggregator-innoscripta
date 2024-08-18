@@ -1,6 +1,7 @@
 import React from "react"
 import { useSelector } from "react-redux"
-
+import { Link } from "react-router-dom"
+import newsImage from "../assets/news.jpg"
 const ArticleList = () => {
   const { filteredArticles, status, error } = useSelector(
     (state) => state.articles
@@ -10,39 +11,41 @@ const ArticleList = () => {
   if (status === "failed") return <p>Error: {error}</p>
 
   return (
-    <div>
+    <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 '>
       {filteredArticles.map((article, index) => (
-        <div
+        <Link
           key={index}
-          style={{
-            border: "1px solid #ccc",
-            marginBottom: "20px",
-            padding: "10px",
-          }}
+          to={article.url}
+          className='card w-full  shadow-xl hover:shadow-2xl transition duration-300 '
+          target='_blank'
         >
-          {article.imageUrl && (
+          <figure className='px-4 pt-4'>
             <img
-              src={article.imageUrl}
+              src={article.imageUrl || newsImage}
               alt={article.title}
-              style={{ width: "100%", height: "auto" }}
+              className='rounded-xl h-64 md:h-48 w-full object-cover'
             />
-          )}
-          <h3>{article.title}</h3>
-          <p>{article.description}</p>
-          <p>
-            <strong>Category:</strong> {article.category}
-          </p>
-          <p>
-            <strong>Source:</strong> {article.source}
-          </p>
-          <p>
-            <strong>Published At:</strong>{" "}
-            {new Date(article.publishedAt).toLocaleDateString()}
-          </p>
-          <a href={article.url} target='_blank' rel='noopener noreferrer'>
-            Read more
-          </a>
-        </div>
+          </figure>
+
+          <div className='card-body items-center'>
+            <h2 className='card-title capitalize tracking-wider text-primary'>
+              {article.title}
+            </h2>
+            <span>{article.description}</span>
+            <div className='w-full'>
+              <p>
+                <strong>Category:</strong> {article.category}
+              </p>
+              <p>
+                <strong>Source:</strong> {article.source}
+              </p>
+              <p>
+                <strong>Published At:</strong>
+                {new Date(article.publishedAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+        </Link>
       ))}
     </div>
   )
