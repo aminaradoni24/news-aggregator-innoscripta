@@ -53,7 +53,7 @@ const ArticleList = () => {
           ))}
         </div>
       ) : (
-        <div class='pt-12 flex justify-center'>
+        <div className='pt-12 flex justify-center'>
           <div role='alert' className='alert alert-info'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
