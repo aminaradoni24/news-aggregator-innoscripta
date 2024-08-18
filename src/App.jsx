@@ -1,5 +1,19 @@
+import React from "react"
+import { Provider } from "react-redux"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { store } from "./redux/store"
+import HomePage from "./pages/HomePage"
+
 function App() {
-  return <h1 className='text-7xl font-bold underline'>Tailwind project</h1>
+  return (
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+        </Routes>
+      </Router>
+    </Provider>
+  )
 }
 
 export default App
