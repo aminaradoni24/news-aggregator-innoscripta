@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar"
 import ArticleList from "../components/ArticleList"
 import Filters from "../components/Filters"
 import { fetchArticles, setFilters } from "../redux/articlesSlice"
+import Navbar from "../components/Navbar"
 const HomePage = () => {
   const dispatch = useDispatch()
   const location = useLocation()
@@ -49,11 +50,15 @@ const HomePage = () => {
   }
 
   return (
-    <section className='align-element'>
-      <SearchBar onSearch={handleSearch} />
-      <Filters onFilterChange={handleFiltersChange} />
-      <ArticleList />
-    </section>
+    <>
+      <Navbar />
+
+      <section className='align-element py-10'>
+        <SearchBar onSearch={handleSearch} />
+        <Filters onFilterChange={handleFiltersChange} />
+        <ArticleList />
+      </section>
+    </>
   )
 }
 
