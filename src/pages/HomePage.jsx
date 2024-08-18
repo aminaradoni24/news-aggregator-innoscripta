@@ -52,7 +52,6 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
-
       <section className='align-element py-10'>
         <SearchBar onSearch={handleSearch} />
         <Filters onFilterChange={handleFiltersChange} />
