@@ -27,6 +27,10 @@ const articlesSlice = createSlice({
       category: "",
       source: "",
     },
+    preferences: {
+      preferredCategories: [],
+      preferredSources: [],
+    },
   },
   reducers: {
     setFilters: (state, action) => {
@@ -49,6 +53,15 @@ const articlesSlice = createSlice({
         return matchesDate && matchesCategory && matchesSource
       })
     },
+    setPreferences: (state, action) => {
+      state.preferences = action.payload
+      // Sort articles based on preferences
+      state.filteredArticles = state.filteredArticles.sort((a, b) => {
+        const aPref = state.preferences.preferredSources.indexOf(a.source)
+        const bPref = state.preferences.preferredSources.indexOf(b.source)
+        return bPref - aPref // Higher preference sources come first
+      })
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,6 +80,6 @@ const articlesSlice = createSlice({
   },
 })
 
-export const { setFilters } = articlesSlice.actions
+export const { setFilters, setPreferences } = articlesSlice.actions
 
 export default articlesSlice.reducer

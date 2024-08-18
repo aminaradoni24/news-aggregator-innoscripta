@@ -31,11 +31,21 @@ const Filters = ({ onFilterChange }) => {
   }
 
   const applyFilters = (category, source, date) => {
-    onFilterChange({ date, category, source })
+    onFilterChange({
+      date: date || "", // Provide default empty string if undefined
+      category: category || "", // Provide default empty string if undefined
+      source: source || "", // Provide default empty string if undefined
+    })
+  }
+  const handleClearFilters = () => {
+    setDate("")
+    setCategory("")
+    setSource("")
+    applyFilters("", "", "")
   }
 
   return (
-    <div className='bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-end'>
+    <div className='bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-end'>
       <div className='form-control'>
         <label className='label'>
           <span className='label-text capitalize'>Date:</span>
@@ -59,13 +69,11 @@ const Filters = ({ onFilterChange }) => {
           onChange={handleCategoryChange}
         >
           <option value=''>All Categories</option>
-          {categories.map((cat, index) => {
-            return (
-              <option key={index} value={cat}>
-                {cat}
-              </option>
-            )
-          })}
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {cat}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -92,6 +100,9 @@ const Filters = ({ onFilterChange }) => {
         className='btn btn-primary btn-sm '
       >
         Apply Filters
+      </button>
+      <button onClick={handleClearFilters} className='btn btn-secondary btn-sm'>
+        Clear Filters
       </button>
     </div>
   )

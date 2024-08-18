@@ -4,13 +4,18 @@ import { useLocation, useNavigate } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import ArticleList from "../components/ArticleList"
 import Filters from "../components/Filters"
-import { fetchArticles, setFilters } from "../redux/articlesSlice"
+import {
+  fetchArticles,
+  setFilters,
+  setPreferences,
+} from "../redux/articlesSlice"
 import Navbar from "../components/Navbar"
+
 const HomePage = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
-  const { filters } = useSelector((state) => state.articles)
+  const { filters, preferences } = useSelector((state) => state.articles)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
@@ -32,7 +37,10 @@ const HomePage = () => {
     if (searchQuery) {
       dispatch(fetchArticles(searchQuery))
     }
-  }, [location.search, dispatch])
+
+    // Apply preferences to filter and sort articles
+    dispatch(setPreferences(preferences))
+  }, [location.search, dispatch, preferences])
 
   const handleSearch = (query) => {
     navigate(
@@ -54,6 +62,7 @@ const HomePage = () => {
       <Navbar />
       <section className='align-element py-10'>
         <SearchBar onSearch={handleSearch} />
+
         <Filters onFilterChange={handleFiltersChange} />
         <ArticleList />
       </section>
